@@ -9,6 +9,7 @@
 - [x] instalar o WordPress no PC da faculdade;
 - [x] ativar o tema e o plugin autorais;
 - [x] adicionar WP-CLI ao ambiente;
+- [x] validar o ambiente no computador da faculdade;
 - [ ] validar o ambiente no computador do trabalho;
 - [ ] validar o ambiente no computador pessoal.
 
