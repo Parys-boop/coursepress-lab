@@ -1,0 +1,47 @@
+/*
+Theme Name: CoursePress Lab
+Theme URI: https://github.com/Parys-boop/coursepress-lab
+Author: Arthur Pires
+Description: Tema educacional próprio para o case CoursePress Lab.
+Version: 0.1.0
+Text Domain: coursepress-lab
+*/
+
+:root {
+    --coursepress-background: #f7f3eb;
+    --coursepress-surface: #ffffff;
+    --coursepress-text: #1f2933;
+    --coursepress-accent: #315c4c;
+    --coursepress-border: #d9d2c4;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--coursepress-background);
+    color: var(--coursepress-text);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.6;
+}
+
+.coursepress-shell {
+    width: min(100% - 2rem, 72rem);
+    margin-inline: auto;
+}
+
+.coursepress-header,
+.coursepress-footer {
+    padding-block: 1.5rem;
+}
+
+.coursepress-main {
+    min-height: 70vh;
+    padding-block: 5rem;
+}
+
+a {
+    color: var(--coursepress-accent);
+}

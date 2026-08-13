@@ -1,0 +1,22 @@
+# Ambiente local
+.env
+.env.*
+!.env.example
+
+# WordPress gerado em execução
+wp-content/uploads/
+wp-content/cache/
+wp-content/upgrade/
+wp-content/backup*/
+wp-content/debug.log
+
+# Dependências e ferramentas
+vendor/
+node_modules/
+
+# Editores e sistema operacional
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
