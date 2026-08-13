@@ -10,6 +10,11 @@ wp-content/upgrade/
 wp-content/backup*/
 wp-content/debug.log
 
+# Backups locais e potencialmente sensíveis
+backups/
+*.sql
+*.sql.gz
+
 # Dependências e ferramentas
 vendor/
 node_modules/

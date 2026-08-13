@@ -21,6 +21,7 @@ Construir uma solução reproduzível que reúna:
 - PHP 8.3 com Apache;
 - MariaDB 10.11;
 - Docker Compose;
+- WP-CLI;
 - tema `coursepress-lab`;
 - plugin `coursepress-core`.
 
@@ -97,6 +98,14 @@ Ver apenas os logs do WordPress:
 docker compose logs -f wordpress
 ```
 
+Executar WP-CLI sem instalar PHP no computador:
+
+```bash
+docker compose run --rm cli core version
+docker compose run --rm cli plugin list
+docker compose run --rm cli theme list
+```
+
 Parar e remover os contêineres, preservando os dados:
 
 ```bash
@@ -104,6 +113,12 @@ docker compose down
 ```
 
 > Não execute `docker compose down -v` sem confirmar que os dados locais podem ser apagados.
+
+## Trabalho em vários computadores
+
+O GitHub sincroniza o código autoral, mas o banco, os usuários, uploads e configurações do painel permanecem em volumes locais. Consulte [docs/MULTI-COMPUTER.md](docs/MULTI-COMPUTER.md) antes de trocar de computador.
+
+Nenhum banco com dados de usuário ou credenciais deve ser versionado.
 
 ## Estrutura
 
@@ -113,6 +128,7 @@ coursepress-lab/
 ├── .env.example
 ├── .gitignore
 ├── docs/
+│   ├── MULTI-COMPUTER.md
 │   └── ROADMAP.md
 └── wp-content/
     ├── plugins/
@@ -125,11 +141,13 @@ O núcleo do WordPress, uploads e banco ficam em volumes Docker. Somente o códi
 
 ## Estado atual
 
-- [x] Ambiente local reproduzível;
+- [x] ambiente local reproduzível;
 - [x] banco com verificação de saúde;
 - [x] esqueleto do tema próprio;
 - [x] esqueleto do plugin próprio;
-- [ ] instalação e configuração inicial do WordPress;
+- [x] instalação e configuração inicial no PC da faculdade;
+- [x] WP-CLI disponível por contêiner;
+- [ ] validação nos outros computadores;
 - [ ] WooCommerce;
 - [ ] Tutor LMS;
 - [ ] landing page;

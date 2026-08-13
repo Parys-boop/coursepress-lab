@@ -2,14 +2,17 @@
 
 ## Fase 1 — Fundação local
 
-- [x] Criar o repositório público;
+- [x] criar o repositório público;
 - [x] configurar WordPress e MariaDB com Docker Compose;
 - [x] separar variáveis locais;
 - [x] criar os esqueletos do tema e do plugin;
-- [ ] instalar o WordPress;
-- [ ] validar o ambiente nos computadores disponíveis.
+- [x] instalar o WordPress no PC da faculdade;
+- [x] ativar o tema e o plugin autorais;
+- [x] adicionar WP-CLI ao ambiente;
+- [ ] validar o ambiente no computador do trabalho;
+- [ ] validar o ambiente no computador pessoal.
 
-**Critério de conclusão:** uma nova máquina consegue clonar o repositório, copiar o arquivo de ambiente e abrir a instalação do WordPress.
+**Critério de conclusão:** cada máquina consegue clonar o repositório, copiar o arquivo de ambiente, subir os serviços e administrar a instalação pelo WP-CLI.
 
 ## Fase 2 — Base comercial
 
