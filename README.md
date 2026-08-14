@@ -22,6 +22,7 @@ Construir uma solução reproduzível que reúna:
 - MariaDB 10.11;
 - Docker Compose;
 - WP-CLI;
+- WooCommerce 11.0.1;
 - tema `coursepress-lab`;
 - plugin `coursepress-core`.
 
@@ -72,7 +73,17 @@ Quando o banco estiver saudável e o WordPress estiver em execução, acesse:
 
 Selecione **Português do Brasil** durante a instalação.
 
-### 4. Encerrar a sessão
+### 4. Configurar a base da loja
+
+Depois de instalar o WordPress, execute no PowerShell:
+
+```powershell
+.\scripts\configure-store.ps1
+```
+
+O script é idempotente e pode ser executado novamente. Ele valida o ambiente, ativa o código autoral, instala a versão definida do WooCommerce e configura identidade, localização, moeda, formatos brasileiros, checkout, permalinks e páginas obrigatórias.
+
+### 5. Encerrar a sessão
 
 ```bash
 docker compose stop
@@ -130,6 +141,8 @@ coursepress-lab/
 ├── docs/
 │   ├── MULTI-COMPUTER.md
 │   └── ROADMAP.md
+├── scripts/
+│   └── configure-store.ps1
 └── wp-content/
     ├── plugins/
     │   └── coursepress-core/
@@ -137,7 +150,7 @@ coursepress-lab/
         └── coursepress-lab/
 ```
 
-O núcleo do WordPress, uploads e banco ficam em volumes Docker. Somente o código autoral do tema e do plugin é versionado.
+O núcleo do WordPress, uploads e banco ficam em volumes Docker. Somente o código autoral do tema, do plugin e das automações é versionado.
 
 ## Estado atual
 
@@ -145,10 +158,11 @@ O núcleo do WordPress, uploads e banco ficam em volumes Docker. Somente o códi
 - [x] banco com verificação de saúde;
 - [x] esqueleto do tema próprio;
 - [x] esqueleto do plugin próprio;
-- [x] instalação e configuração inicial no PC da faculdade;
+- [x] validação no PC da faculdade;
+- [x] validação no PC pessoal;
+- [ ] validação no PC do trabalho;
 - [x] WP-CLI disponível por contêiner;
-- [ ] validação nos outros computadores;
-- [ ] WooCommerce;
+- [ ] configuração automatizada do WooCommerce validada;
 - [ ] Tutor LMS;
 - [ ] landing page;
 - [ ] checkout de testes;
