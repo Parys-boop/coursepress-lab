@@ -48,8 +48,12 @@ try {
     Invoke-Wp theme activate coursepress-lab
     Invoke-Wp plugin activate coursepress-core
 
-    & docker compose run --rm cli plugin is-installed woocommerce *> $null
-    if ($LASTEXITCODE -ne 0) {
+    # Não combine os fluxos nativos aqui. O Windows PowerShell 5.1 converte
+    # o progresso do Docker Compose em NativeCommandError quando eles são mesclados.
+    & docker compose run --rm cli plugin is-installed woocommerce
+    $WooCommerceInstalled = $LASTEXITCODE -eq 0
+
+    if (-not $WooCommerceInstalled) {
         Invoke-Wp plugin install woocommerce "--version=$WooCommerceVersion" --activate
     }
     else {
