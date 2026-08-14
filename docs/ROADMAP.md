@@ -11,7 +11,7 @@
 - [x] adicionar WP-CLI ao ambiente;
 - [x] validar o ambiente no computador da faculdade;
 - [ ] validar o ambiente no computador do trabalho;
-- [ ] validar o ambiente no computador pessoal.
+- [x] validar o ambiente no computador pessoal.
 
 **Critério de conclusão:** cada máquina consegue clonar o repositório, copiar o arquivo de ambiente, subir os serviços e administrar a instalação pelo WP-CLI.
 
