@@ -83,7 +83,17 @@ Depois de instalar o WordPress, execute no PowerShell:
 
 O script é idempotente e pode ser executado novamente. Ele valida o ambiente, ativa o código autoral, instala a versão definida do WooCommerce e configura identidade, localização, moeda, formatos brasileiros, checkout, permalinks e páginas obrigatórias.
 
-### 5. Encerrar a sessão
+### 5. Criar o produto demonstrativo
+
+Depois de configurar a loja, execute no PowerShell:
+
+```powershell
+.\scripts\configure-demo-product.ps1
+```
+
+O script cria ou atualiza exclusivamente o produto demonstrativo gerenciado pela CoursePress Academy. Ele pode ser executado novamente sem duplicar produto ou categoria e mantém o produto como rascunho.
+
+### 6. Encerrar a sessão
 
 ```bash
 docker compose stop
@@ -151,6 +161,10 @@ coursepress-lab/
 ```
 
 O núcleo do WordPress, uploads e banco ficam em volumes Docker. Somente o código autoral do tema, do plugin e das automações é versionado.
+
+## Reversão do produto demonstrativo
+
+A reversão não é automática. Somente com autorização explícita, localize o produto pelo SKU `CPA-WP-NEGOCIOS-001` e confirme o marcador `_coursepress_demo_managed = 1` antes de removê-lo. A categoria `Cursos de WordPress` só pode ser removida se tiver o mesmo marcador e não possuir produtos. Nunca remova volumes para reverter esse conteúdo.
 
 ## Estado atual
 

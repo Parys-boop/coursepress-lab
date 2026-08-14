@@ -19,7 +19,7 @@
 
 - [ ] configurar identidade e estrutura do site;
 - [ ] instalar e configurar WooCommerce;
-- [ ] criar produto de curso;
+- [x] criar produto de curso;
 - [ ] configurar checkout em ambiente de testes;
 - [ ] definir páginas legais e transacionais.
 
