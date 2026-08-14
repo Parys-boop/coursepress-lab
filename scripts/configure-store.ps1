@@ -112,13 +112,19 @@ try {
     Invoke-Wp wc tool run install_pages "--user=$AdminId"
     Invoke-Wp rewrite flush
 
-    $StoredDescriptionOutput = & docker compose run --rm cli option get blogdescription
+    # Compare bytes em hexadecimal para nao depender da codificacao usada
+    # pelo Windows PowerShell 5.1 ao ler a saida UTF-8 de processos nativos.
+    $ExpectedDescriptionHex = -join (
+        [System.Text.Encoding]::UTF8.GetBytes($StoreDescription) |
+            ForEach-Object { $_.ToString("x2") }
+    )
+    $StoredDescriptionHexOutput = & docker compose run --rm cli eval "echo bin2hex(get_option('blogdescription'));"
     if ($LASTEXITCODE -ne 0) {
         throw "Nao foi possivel validar a descricao da loja."
     }
 
-    $StoredDescription = ($StoredDescriptionOutput | Select-Object -Last 1).Trim()
-    if ($StoredDescription -ne $StoreDescription) {
+    $StoredDescriptionHex = ($StoredDescriptionHexOutput | Select-Object -Last 1).Trim()
+    if ($StoredDescriptionHex -ne $ExpectedDescriptionHex) {
         throw "A descricao da loja nao foi preservada corretamente."
     }
 
@@ -127,7 +133,7 @@ try {
     Write-Host "WooCommerce: $InstalledVersion"
     Write-Host "Moeda: BRL"
     Write-Host "Localizacao: Brasil / Sao Paulo"
-    Write-Host "Descricao: $StoredDescription"
+    Write-Host "Descricao: $StoreDescription"
 }
 finally {
     Pop-Location
