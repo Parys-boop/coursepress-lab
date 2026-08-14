@@ -26,6 +26,10 @@ try {
         throw "Arquivo .env ausente. Copie .env.example para .env antes de continuar."
     }
 
+    if (-not (Get-Command docker -ErrorAction SilentlyContinue)) {
+        throw "Docker CLI nao esta disponivel. Instale ou inicie o Docker Desktop e tente novamente."
+    }
+
     $null = & docker info 2>&1
     if ($LASTEXITCODE -ne 0) {
         throw "Docker Desktop nao esta disponivel. Inicie-o e tente novamente."
@@ -110,6 +114,40 @@ try {
     }
 
     Invoke-Wp wc tool run install_pages "--user=$AdminId"
+
+    $StorePages = [ordered]@{
+        woocommerce_shop_page_id     = "Loja"
+        woocommerce_cart_page_id     = "Carrinho"
+        woocommerce_checkout_page_id = "Finaliza$([char] 0x00E7)$([char] 0x00E3)o de compra"
+        woocommerce_myaccount_page_id = "Minha conta"
+    }
+
+    foreach ($StorePage in $StorePages.GetEnumerator()) {
+        $PageIdOutput = & docker compose run --rm cli option get $StorePage.Key
+        if ($LASTEXITCODE -ne 0) {
+            throw "Nao foi possivel localizar a pagina configurada em $($StorePage.Key)."
+        }
+
+        $PageId = ($PageIdOutput | Select-Object -Last 1).Trim()
+        if ($PageId -notmatch "^\d+$") {
+            throw "A pagina configurada em $($StorePage.Key) e invalida."
+        }
+
+        $ExpectedPageTitleHex = -join (
+            [System.Text.Encoding]::UTF8.GetBytes([string] $StorePage.Value) |
+                ForEach-Object { $_.ToString("x2") }
+        )
+        $StoredPageTitleHexOutput = & docker compose run --rm cli eval "echo bin2hex(get_the_title($PageId));"
+        if ($LASTEXITCODE -ne 0) {
+            throw "Nao foi possivel validar o titulo da pagina $PageId."
+        }
+
+        $StoredPageTitleHex = ($StoredPageTitleHexOutput | Select-Object -Last 1).Trim()
+        if ($StoredPageTitleHex -ne $ExpectedPageTitleHex) {
+            Invoke-Wp post update $PageId "--post_title=$($StorePage.Value)"
+        }
+    }
+
     Invoke-Wp rewrite flush
 
     # Compare bytes em hexadecimal para nao depender da codificacao usada
