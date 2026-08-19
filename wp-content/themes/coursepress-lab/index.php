@@ -16,11 +16,37 @@ if ( ! defined( 'ABSPATH' ) ) {
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
-<header class="coursepress-header">
+<header class="coursepress-header" data-coursepress-header>
     <div class="coursepress-shell">
-        <a href="<?php echo esc_url( home_url( '/' ) ); ?>">
-            <?php bloginfo( 'name' ); ?>
+        <a class="coursepress-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
+            <?php echo esc_html( get_bloginfo( 'name' ) ); ?>
         </a>
+        <button
+            class="coursepress-menu-toggle"
+            type="button"
+            aria-controls="coursepress-primary-navigation"
+            aria-expanded="false"
+            aria-label="<?php esc_attr_e( 'Abrir menu', 'coursepress-lab' ); ?>"
+        >
+            <?php esc_html_e( 'Menu', 'coursepress-lab' ); ?>
+        </button>
+        <nav
+            id="coursepress-primary-navigation"
+            class="coursepress-primary-navigation"
+            aria-label="<?php esc_attr_e( 'Navegação principal', 'coursepress-lab' ); ?>"
+        >
+            <?php
+            wp_nav_menu(
+                array(
+                    'theme_location' => 'primary',
+                    'container'      => false,
+                    'menu_class'     => 'coursepress-menu',
+                    'fallback_cb'    => false,
+                    'depth'          => 1,
+                )
+            );
+            ?>
+        </nav>
     </div>
 </header>
 

@@ -91,9 +91,25 @@ Depois de configurar a loja, execute no PowerShell:
 .\scripts\configure-demo-product.ps1
 ```
 
-O script cria ou atualiza exclusivamente o produto demonstrativo gerenciado pela CoursePress Academy. Ele pode ser executado novamente sem duplicar produto ou categoria e mantém o produto como rascunho.
+O script cria ou atualiza exclusivamente o produto demonstrativo gerenciado pela CoursePress Academy. Ele pode ser executado novamente sem duplicar produto ou categoria e mantém o produto publicado na loja demonstrativa.
 
-### 6. Encerrar a sessão
+### 6. Configurar a identidade e a navegação
+
+Depois de configurar a loja, execute no PowerShell:
+
+```powershell
+.\scripts\configure-site-identity.ps1
+```
+
+No WSL/Linux com PowerShell 7:
+
+```bash
+pwsh -NoProfile -File ./scripts/configure-site-identity.ps1
+```
+
+O script cria ou atualiza a página Início e o menu Navegação principal. Ele protege recursos não gerenciados e pode ser executado novamente sem duplicar páginas ou itens de menu.
+
+### 7. Encerrar a sessão
 
 ```bash
 docker compose stop
@@ -174,9 +190,9 @@ A reversão não é automática. Somente com autorização explícita, localize 
 - [x] esqueleto do plugin próprio;
 - [x] validação no PC da faculdade;
 - [x] validação no PC pessoal;
-- [ ] validação no PC do trabalho;
+- [x] validação no PC do trabalho;
 - [x] WP-CLI disponível por contêiner;
-- [ ] configuração automatizada do WooCommerce validada;
+- [x] configuração automatizada do WooCommerce validada;
 - [ ] Tutor LMS;
 - [ ] landing page;
 - [ ] checkout de testes;

@@ -4,6 +4,7 @@ Set-StrictMode -Version Latest
 $WooCommerceVersion = "11.0.1"
 $RepositoryRoot = Split-Path -Parent $PSScriptRoot
 $StoreDescription = "Cursos pr$([char] 0x00E1)ticos para freelancers e pequenos neg$([char] 0x00F3)cios."
+$StoreLocale = "pt_BR"
 
 function Invoke-Wp {
     param(
@@ -16,6 +17,22 @@ function Invoke-Wp {
 
     if ($LASTEXITCODE -ne 0) {
         throw "O comando WP-CLI falhou: wp $($WpArguments -join ' ')"
+    }
+}
+
+function Get-WooCommerceLanguages {
+    $LanguageOutput = & docker compose run --rm cli language plugin list woocommerce --format=json
+    if ($LASTEXITCODE -ne 0) {
+        throw "Nao foi possivel listar os pacotes de idioma do WooCommerce."
+    }
+
+    $LanguageJson = ($LanguageOutput | Select-Object -Last 1).Trim()
+
+    try {
+        return @($LanguageJson | ConvertFrom-Json)
+    }
+    catch {
+        throw "A lista de pacotes de idioma do WooCommerce e invalida."
     }
 }
 
@@ -75,9 +92,20 @@ try {
         throw "Versao inesperada do WooCommerce: $InstalledVersion. Esperada: $WooCommerceVersion."
     }
 
+    $WooCommerceLanguages = Get-WooCommerceLanguages
+    $PortugueseLanguage = $WooCommerceLanguages | Where-Object { $_.language -eq $StoreLocale } | Select-Object -First 1
+
+    if ($null -eq $PortugueseLanguage) {
+        throw "O pacote de idioma $StoreLocale do WooCommerce nao esta disponivel."
+    }
+
+    Invoke-Wp language core install $StoreLocale --activate
+    Invoke-Wp language plugin install woocommerce $StoreLocale
+
     $Options = [ordered]@{
         blogname                                          = "CoursePress Academy"
         blogdescription                                   = $StoreDescription
+        WPLANG                                            = $StoreLocale
         timezone_string                                   = "America/Sao_Paulo"
         date_format                                       = "d/m/Y"
         time_format                                       = "H:i"
@@ -95,12 +123,29 @@ try {
         woocommerce_enable_signup_and_login_from_checkout = "yes"
         woocommerce_enable_myaccount_registration         = "yes"
         woocommerce_manage_stock                          = "no"
+        woocommerce_coming_soon                            = "no"
+        woocommerce_store_pages_only                       = "no"
         woocommerce_weight_unit                           = "kg"
         woocommerce_dimension_unit                        = "cm"
     }
 
     foreach ($Option in $Options.GetEnumerator()) {
         Invoke-Wp option update $Option.Key ([string] $Option.Value)
+    }
+
+    & docker compose run --rm cli language plugin is-installed woocommerce $StoreLocale
+    if ($LASTEXITCODE -ne 0) {
+        throw "O pacote de idioma $StoreLocale do WooCommerce nao foi instalado."
+    }
+
+    $LocaleOutput = & docker compose run --rm cli eval "echo get_option('WPLANG') . '|' . get_locale() . '|' . determine_locale();"
+    if ($LASTEXITCODE -ne 0) {
+        throw "Nao foi possivel validar o locale da loja."
+    }
+
+    $LocaleParts = (($LocaleOutput | Select-Object -Last 1).Trim()).Split("|")
+    if ($LocaleParts.Count -ne 3 -or $LocaleParts[0] -ne $StoreLocale -or $LocaleParts[1] -ne $StoreLocale -or $LocaleParts[2] -ne $StoreLocale) {
+        throw "O locale da loja nao foi configurado como $StoreLocale."
     }
 
     $AdminOutput = & docker compose run --rm cli user list --role=administrator --format=ids --skip-plugins --skip-themes
@@ -169,6 +214,8 @@ try {
     Write-Host ""
     Write-Host "CoursePress Academy configurada com sucesso." -ForegroundColor Green
     Write-Host "WooCommerce: $InstalledVersion"
+    Write-Host "Idioma: $StoreLocale"
+    Write-Host "Visibilidade da loja: ativa"
     Write-Host "Moeda: BRL"
     Write-Host "Localizacao: Brasil / Sao Paulo"
     Write-Host "Descricao: $StoreDescription"

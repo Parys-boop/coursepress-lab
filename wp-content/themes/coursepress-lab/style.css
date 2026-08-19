@@ -37,6 +37,54 @@ body {
     padding-block: 1.5rem;
 }
 
+.coursepress-header .coursepress-shell {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.coursepress-brand {
+    color: var(--coursepress-text);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.coursepress-primary-navigation {
+    margin-left: auto;
+}
+
+.coursepress-menu {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.coursepress-menu a {
+    display: inline-block;
+    padding-block: 0.5rem;
+    text-decoration: none;
+}
+
+.coursepress-menu .current-menu-item a,
+.coursepress-menu a:hover,
+.coursepress-menu a:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+.coursepress-menu-toggle {
+    background: var(--coursepress-surface);
+    border: 1px solid var(--coursepress-border);
+    color: var(--coursepress-text);
+    cursor: pointer;
+    display: none;
+    font: inherit;
+    padding: 0.5rem 0.75rem;
+}
+
 .coursepress-main {
     min-height: 70vh;
     padding-block: 5rem;
@@ -44,4 +92,28 @@ body {
 
 a {
     color: var(--coursepress-accent);
+}
+
+@media (max-width: 47.9375rem) {
+    .coursepress-header .coursepress-shell {
+        flex-wrap: wrap;
+    }
+
+    .coursepress-menu-toggle {
+        display: block;
+    }
+
+    .coursepress-primary-navigation {
+        flex-basis: 100%;
+        margin-left: 0;
+    }
+
+    .coursepress-menu {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .coursepress-navigation-ready .coursepress-primary-navigation[hidden] {
+        display: none;
+    }
 }

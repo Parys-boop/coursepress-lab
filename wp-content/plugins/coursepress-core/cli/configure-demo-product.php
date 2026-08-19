@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $product_name              = 'WordPress para Negócios: do Zero à Loja Online';
 $product_sku               = 'CPA-WP-NEGOCIOS-001';
 $product_slug              = 'wordpress-para-negocios-do-zero-a-loja-online';
-$product_status            = 'draft';
+$product_status            = 'publish';
 $product_regular_price     = '297.00';
 $product_short_description = 'Curso demonstrativo para freelancers e pequenos empreendedores que querem criar uma loja online com WordPress.';
 $product_description       = implode(
