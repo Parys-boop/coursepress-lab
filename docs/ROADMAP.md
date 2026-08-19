@@ -10,7 +10,7 @@
 - [x] ativar o tema e o plugin autorais;
 - [x] adicionar WP-CLI ao ambiente;
 - [x] validar o ambiente no computador da faculdade;
-- [ ] validar o ambiente no computador do trabalho;
+- [x] validar o ambiente no computador do trabalho;
 - [x] validar o ambiente no computador pessoal.
 
 **Critério de conclusão:** cada máquina consegue clonar o repositório, copiar o arquivo de ambiente, subir os serviços e administrar a instalação pelo WP-CLI.
