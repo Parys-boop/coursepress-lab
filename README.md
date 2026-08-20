@@ -81,7 +81,9 @@ Depois de instalar o WordPress, execute no PowerShell:
 .\scripts\configure-store.ps1
 ```
 
-O script é idempotente e pode ser executado novamente. Ele valida o ambiente, ativa o código autoral, instala a versão definida do WooCommerce e configura identidade, localização, moeda, formatos brasileiros, checkout, permalinks e páginas obrigatórias.
+O script é idempotente e pode ser executado novamente. Ele valida o ambiente, ativa o código autoral, instala a versão definida do WooCommerce e configura localização, moeda, formatos brasileiros, checkout, permalinks e as páginas transacionais oficiais. Títulos, slugs e conteúdos dessas páginas não são reescritos pela automação.
+
+Também configura as páginas publicadas de Política de Privacidade e Termos e Condições para este ambiente educacional e demonstrativo. Essas páginas usam marcadores e hashes para impedir sobrescrita de conteúdo alterado manualmente; a Política de Privacidade padrão do WordPress só é reatribuída quando ainda é um rascunho oficial sem alterações.
 
 ### 5. Criar o produto demonstrativo
 
@@ -193,6 +195,7 @@ A reversão não é automática. Somente com autorização explícita, localize 
 - [x] validação no PC do trabalho;
 - [x] WP-CLI disponível por contêiner;
 - [x] configuração automatizada do WooCommerce validada;
+- [x] páginas legais e transacionais reproduzíveis;
 - [ ] Tutor LMS;
 - [ ] landing page;
 - [ ] checkout de testes;
