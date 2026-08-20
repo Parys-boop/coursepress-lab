@@ -195,7 +195,7 @@ try {
         }
     }
 
-    Invoke-Wp rewrite flush
+    Invoke-Wp rewrite flush --hard
 
     # Compare bytes em hexadecimal para nao depender da codificacao usada
     # pelo Windows PowerShell 5.1 ao ler a saida UTF-8 de processos nativos.
