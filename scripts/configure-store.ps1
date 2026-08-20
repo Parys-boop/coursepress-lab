@@ -148,6 +148,8 @@ try {
         throw "O locale da loja nao foi configurado como $StoreLocale."
     }
 
+    Invoke-Wp eval-file wp-content/plugins/coursepress-core/cli/configure-privacy-notices.php
+
     $AdminOutput = & docker compose run --rm cli user list --role=administrator --format=ids --skip-plugins --skip-themes
     if ($LASTEXITCODE -ne 0) {
         throw "Nao foi possivel localizar um usuario administrador."
