@@ -57,10 +57,18 @@ services:
     environment:
       <<: *wordpress-environment
       HOME: /tmp
+      WP_CLI_CONFIG_PATH: /tmp/wp-cli.yml
     volumes: *wordpress-volumes
+    configs:
+      - source: wp_cli_config
+        target: /tmp/wp-cli.yml
     networks:
       - coursepress
     entrypoint: ["wp"]
+
+configs:
+  wp_cli_config:
+    file: ./scripts/wp-cli.yml
 
 volumes:
   database_data:
