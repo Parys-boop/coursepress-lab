@@ -2,7 +2,7 @@
 /**
  * Plugin Name: CoursePress Core
  * Description: Funcionalidades autorais do projeto CoursePress Lab.
- * Version: 0.2.0
+ * Version: 0.3.0
  * Author: Arthur Pires
  * Text Domain: coursepress-core
  */
@@ -25,7 +25,11 @@ const COURSEPRESS_CORE_LEAD_POST_TYPE      = 'coursepress_lead';
 const COURSEPRESS_CORE_LEAD_NAME_META      = '_coursepress_lead_name';
 const COURSEPRESS_CORE_LEAD_EMAIL_META     = '_coursepress_lead_email';
 const COURSEPRESS_CORE_LEAD_CONSENT_META   = '_coursepress_lead_consent';
+const COURSEPRESS_CORE_LEAD_CONFIRMATION_SENT_AT_META = '_coursepress_lead_confirmation_sent_at';
 const COURSEPRESS_CORE_LEAD_CAPTURE_ACTION = 'coursepress_capture_lead';
+const COURSEPRESS_CORE_LOCAL_MAIL_ENABLED  = 'COURSEPRESS_LOCAL_MAIL_ENABLED';
+const COURSEPRESS_CORE_LOCAL_MAIL_FROM      = 'no-reply@coursepress.test';
+const COURSEPRESS_CORE_LOCAL_MAIL_FROM_NAME = 'CoursePress Academy';
 
 /**
  * Registra leads como recurso interno, sem superfície pública.
@@ -89,6 +93,7 @@ function coursepress_core_lead_columns( array $columns ): array {
         'coursepress_lead_name'    => __( 'Nome', 'coursepress-core' ),
         'coursepress_lead_email'   => __( 'E-mail', 'coursepress-core' ),
         'coursepress_lead_consent' => __( 'Consentimento', 'coursepress-core' ),
+        'coursepress_lead_confirmation' => __( 'Confirmação', 'coursepress-core' ),
         'date'                     => __( 'Data', 'coursepress-core' ),
     );
 }
@@ -112,8 +117,99 @@ function coursepress_core_render_lead_column( string $column, int $post_id ): vo
     if ( 'coursepress_lead_consent' === $column ) {
         esc_html_e( 'Confirmado', 'coursepress-core' );
     }
+
+    if ( 'coursepress_lead_confirmation' === $column ) {
+        $sent_at = (string) get_post_meta( $post_id, COURSEPRESS_CORE_LEAD_CONFIRMATION_SENT_AT_META, true );
+
+        echo esc_html( $sent_at ? $sent_at : __( 'Pendente', 'coursepress-core' ) );
+    }
 }
 add_action( 'manage_' . COURSEPRESS_CORE_LEAD_POST_TYPE . '_posts_custom_column', 'coursepress_core_render_lead_column', 10, 2 );
+
+/**
+ * Informa se o transporte SMTP demonstrativo pode ser usado neste ambiente.
+ */
+function coursepress_core_local_mail_transport_enabled(): bool {
+    return 'local' === wp_get_environment_type() && '1' === (string) getenv( COURSEPRESS_CORE_LOCAL_MAIL_ENABLED );
+}
+
+/**
+ * Define um remetente válido apenas para o transporte demonstrativo local.
+ *
+ * @param string $from Remetente original do WordPress.
+ * @return string
+ */
+function coursepress_core_local_mail_from( string $from ): string {
+    return coursepress_core_local_mail_transport_enabled() ? COURSEPRESS_CORE_LOCAL_MAIL_FROM : $from;
+}
+add_filter( 'wp_mail_from', 'coursepress_core_local_mail_from' );
+
+/**
+ * Define o nome do remetente apenas para o transporte demonstrativo local.
+ *
+ * @param string $from_name Nome original do remetente.
+ * @return string
+ */
+function coursepress_core_local_mail_from_name( string $from_name ): string {
+    return coursepress_core_local_mail_transport_enabled() ? COURSEPRESS_CORE_LOCAL_MAIL_FROM_NAME : $from_name;
+}
+add_filter( 'wp_mail_from_name', 'coursepress_core_local_mail_from_name' );
+
+/**
+ * Direciona o PHPMailer ao Mailpit interno quando habilitado explicitamente.
+ *
+ * @param PHPMailer\PHPMailer\PHPMailer $phpmailer Instância configurada pelo WordPress.
+ */
+function coursepress_core_configure_local_mail_transport( $phpmailer ): void {
+    if ( ! coursepress_core_local_mail_transport_enabled() ) {
+        return;
+    }
+
+    $phpmailer->isSMTP();
+    $phpmailer->Host        = 'mailpit';
+    $phpmailer->Port        = 1025;
+    $phpmailer->SMTPAuth    = false;
+    $phpmailer->SMTPAutoTLS = false;
+    $phpmailer->SMTPSecure  = '';
+    $phpmailer->From        = COURSEPRESS_CORE_LOCAL_MAIL_FROM;
+    $phpmailer->FromName    = COURSEPRESS_CORE_LOCAL_MAIL_FROM_NAME;
+}
+add_action( 'phpmailer_init', 'coursepress_core_configure_local_mail_transport' );
+
+/**
+ * Envia a confirmação transacional de um lead quando ela ainda estiver pendente.
+ *
+ * @param int    $lead_id ID do lead privado.
+ * @param string $email   Endereço normalizado do lead.
+ * @return bool
+ */
+function coursepress_core_maybe_send_lead_confirmation( int $lead_id, string $email ): bool {
+    if (
+        ! coursepress_core_local_mail_transport_enabled()
+        || ! is_email( $email )
+        || '' !== (string) get_post_meta( $lead_id, COURSEPRESS_CORE_LEAD_CONFIRMATION_SENT_AT_META, true )
+    ) {
+        return false;
+    }
+
+    $subject = 'Confirmação de interesse — CoursePress Academy';
+    $message = implode(
+        "\n",
+        array(
+            'Seu interesse foi registrado na CoursePress Academy.',
+            '',
+            'Este é um ambiente educacional e demonstrativo.',
+            'Nenhuma oferta comercial ou pagamento real está associado a esta mensagem.',
+        )
+    );
+    $headers = array( 'Content-Type: text/plain; charset=UTF-8' );
+
+    if ( ! wp_mail( $email, $subject, $message, $headers ) ) {
+        return false;
+    }
+
+    return false !== update_post_meta( $lead_id, COURSEPRESS_CORE_LEAD_CONFIRMATION_SENT_AT_META, current_time( 'mysql', true ) );
+}
 
 /**
  * Retorna a URL da landing com um status permitido de captura.
@@ -180,6 +276,7 @@ function coursepress_core_capture_lead(): void {
     );
 
     if ( ! empty( $existing_lead_ids ) ) {
+        coursepress_core_maybe_send_lead_confirmation( (int) $existing_lead_ids[0], $email );
         coursepress_core_finish_lead_capture( 'success' );
     }
 
@@ -208,6 +305,7 @@ function coursepress_core_capture_lead(): void {
         coursepress_core_finish_lead_capture( 'error' );
     }
 
+    coursepress_core_maybe_send_lead_confirmation( $lead_id, $email );
     coursepress_core_finish_lead_capture( 'success' );
 }
 add_action( 'admin_post_' . COURSEPRESS_CORE_LEAD_CAPTURE_ACTION, 'coursepress_core_capture_lead' );

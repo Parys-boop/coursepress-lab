@@ -35,7 +35,7 @@
 
 - [x] construir landing page responsiva;
 - [x] configurar formulário e captação;
-- [ ] integrar e-mail transacional;
+- [x] integrar e-mail transacional;
 - [ ] configurar GA4 e Google Tag Manager;
 - [ ] aplicar SEO técnico básico.
 

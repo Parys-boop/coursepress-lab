@@ -152,7 +152,13 @@ A landing inclui uma seção de captação local com nome, e-mail e consentiment
 
 O formulário não envia e-mails, não usa CRM, analytics nem serviços externos. A Política de Privacidade gerenciada descreve essa captação demonstrativa.
 
-### 11. Encerrar a sessão
+### 11. Consultar e-mails transacionais locais
+
+O ambiente inclui o Mailpit `v1.30.7` para capturar e-mails sem entregá-los fora do Docker. Com `COURSEPRESS_LOCAL_MAIL_ENABLED=1`, o `wp_mail` usa o SMTP interno e a interface fica disponível em `http://127.0.0.1:MAILPIT_UI_PORT` (porta padrão `8025`).
+
+O primeiro registro de interesse envia uma confirmação em texto simples. Reenvios do mesmo e-mail não geram nova confirmação depois de um envio bem-sucedido; se o envio anterior falhar, uma nova tentativa é feita sem duplicar o lead.
+
+### 12. Encerrar a sessão
 
 ```bash
 docker compose stop

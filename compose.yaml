@@ -1,6 +1,14 @@
 name: coursepress-lab
 
 services:
+  mailpit:
+    image: axllent/mailpit:v1.30.7
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${MAILPIT_UI_PORT:-8025}:8025"
+    networks:
+      - coursepress
+
   db:
     image: mariadb:10.11
     restart: unless-stopped
@@ -26,6 +34,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      mailpit:
+        condition: service_started
     ports:
       - "${WORDPRESS_PORT:-8080}:80"
     environment: &wordpress-environment
@@ -34,6 +44,7 @@ services:
       WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
       WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
       WORDPRESS_DEBUG: ${WORDPRESS_DEBUG:-1}
+      COURSEPRESS_LOCAL_MAIL_ENABLED: ${COURSEPRESS_LOCAL_MAIL_ENABLED:-0}
       WORDPRESS_CONFIG_EXTRA: |
         define('WP_ENVIRONMENT_TYPE', 'local');
         define('WP_DEBUG_LOG', true);
@@ -54,6 +65,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      mailpit:
+        condition: service_started
     environment:
       <<: *wordpress-environment
       HOME: /tmp
