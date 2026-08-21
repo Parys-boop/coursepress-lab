@@ -23,6 +23,7 @@ Construir uma solução reproduzível que reúna:
 - Docker Compose;
 - WP-CLI;
 - WooCommerce 11.0.1;
+- Tutor LMS 4.0.5;
 - tema `coursepress-lab`;
 - plugin `coursepress-core`.
 
@@ -111,7 +112,17 @@ pwsh -NoProfile -File ./scripts/configure-site-identity.ps1
 
 O script cria ou atualiza a página Início e o menu Navegação principal. Ele protege recursos não gerenciados e pode ser executado novamente sem duplicar páginas ou itens de menu.
 
-### 7. Encerrar a sessão
+### 7. Configurar a fundação do curso
+
+Depois de criar o produto demonstrativo, execute no PowerShell:
+
+```powershell
+.\scripts\configure-lms.ps1
+```
+
+O script instala o Tutor LMS na versão definida, instala sua tradução pt_BR e cria uma única trilha demonstrativa vinculada ao produto `CPA-WP-NEGOCIOS-001`. A primeira aula é uma prévia pública; as demais dependem de matrícula. O marco não configura pagamentos, matrícula automática ou recursos Pro.
+
+### 8. Encerrar a sessão
 
 ```bash
 docker compose stop
@@ -196,7 +207,7 @@ A reversão não é automática. Somente com autorização explícita, localize 
 - [x] WP-CLI disponível por contêiner;
 - [x] configuração automatizada do WooCommerce validada;
 - [x] páginas legais e transacionais reproduzíveis;
-- [ ] Tutor LMS;
+- [x] fundação do Tutor LMS;
 - [ ] landing page;
 - [ ] checkout de testes;
 - [ ] integrações;
