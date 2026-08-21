@@ -331,8 +331,16 @@ if ( ! class_exists( 'WP_Privacy_Policy_Content' ) || ! is_callable( array( 'WP_
 
 $current_locale = determine_locale();
 $privacy_candidates = array(
-    'pt_BR' => coursepress_core_legal_default_privacy_content( 'pt_BR', $current_locale ),
-    'en_US' => coursepress_core_legal_default_privacy_content( 'en_US', $current_locale ),
+    'pt_BR' => array(
+        'content' => coursepress_core_legal_default_privacy_content( 'pt_BR', $current_locale ),
+        'title'   => 'Política de Privacidade',
+        'slug'    => 'politica-de-privacidade',
+    ),
+    'en_US' => array(
+        'content' => coursepress_core_legal_default_privacy_content( 'en_US', $current_locale ),
+        'title'   => 'Privacy Policy',
+        'slug'    => 'privacy-policy',
+    ),
 );
 
 $definitions = array(
@@ -345,6 +353,12 @@ foreach ( $definitions as $key => $definition ) {
     $page_id = coursepress_core_legal_find_page_by_key( $key );
     $existing_pages[ $key ] = $page_id > 0 ? coursepress_core_legal_require_managed_page( $page_id, $key ) : null;
     coursepress_core_legal_require_slug_available( $definition['slug'], $page_id );
+}
+
+$previous_terms_page_id = (int) get_option( 'woocommerce_terms_page_id', 0 );
+
+if ( 0 !== $previous_terms_page_id && ( null === $existing_pages['terms'] || $previous_terms_page_id !== (int) $existing_pages['terms']->ID ) ) {
+    coursepress_core_legal_fail( 'A pagina de termos atualmente atribuida nao pertence a automacao do CoursePress.' );
 }
 
 $previous_privacy_page_id = (int) get_option( 'wp_page_for_privacy_policy', 0 );
@@ -363,10 +377,16 @@ if ( 0 !== $previous_privacy_page_id && ( null === $existing_pages['privacy'] ||
 
     $privacy_reassignment['hashes']['current'] = hash( 'sha256', $previous_page->post_content );
 
-    foreach ( $privacy_candidates as $locale => $candidate_content ) {
-        $privacy_reassignment['hashes'][ $locale ] = hash( 'sha256', $candidate_content );
+    foreach ( $privacy_candidates as $locale => $candidate ) {
+        $privacy_reassignment['hashes'][ $locale ] = hash( 'sha256', $candidate['content'] );
 
-        if ( null === $privacy_reassignment['match'] && $previous_page->post_content === $candidate_content ) {
+        if (
+            null === $privacy_reassignment['match'] &&
+            0 === (int) $previous_page->post_parent &&
+            $candidate['title'] === $previous_page->post_title &&
+            $candidate['slug'] === $previous_page->post_name &&
+            $previous_page->post_content === $candidate['content']
+        ) {
             $privacy_reassignment['match'] = $locale;
         }
     }
