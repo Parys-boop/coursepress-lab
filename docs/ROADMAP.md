@@ -25,9 +25,9 @@
 
 ## Fase 3 — Entrega do curso
 
-- [ ] instalar e configurar Tutor LMS;
-- [ ] estruturar curso, módulos e aulas demonstrativas;
-- [ ] controlar acesso do aluno;
+- [x] instalar e configurar Tutor LMS;
+- [x] estruturar curso, módulos e aulas demonstrativas;
+- [x] controlar acesso por prévia e conteúdo protegido;
 - [ ] conectar compra aprovada à matrícula;
 - [ ] testar a jornada completa.
 
