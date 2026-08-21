@@ -20,7 +20,7 @@
 - [x] configurar identidade e estrutura do site;
 - [x] instalar e configurar WooCommerce;
 - [x] criar produto de curso;
-- [ ] configurar checkout em ambiente de testes;
+- [x] configurar checkout em ambiente de testes;
 - [x] definir páginas legais e transacionais.
 
 ## Fase 3 — Entrega do curso
@@ -28,8 +28,8 @@
 - [x] instalar e configurar Tutor LMS;
 - [x] estruturar curso, módulos e aulas demonstrativas;
 - [x] controlar acesso por prévia e conteúdo protegido;
-- [ ] conectar compra aprovada à matrícula;
-- [ ] testar a jornada completa.
+- [x] conectar compra aprovada à matrícula;
+- [x] testar a jornada completa.
 
 ## Fase 4 — Conversão e integrações
 

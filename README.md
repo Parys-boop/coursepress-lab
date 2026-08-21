@@ -122,7 +122,25 @@ Depois de criar o produto demonstrativo, execute no PowerShell:
 
 O script instala o Tutor LMS na versão definida, instala sua tradução pt_BR e cria uma única trilha demonstrativa vinculada ao produto `CPA-WP-NEGOCIOS-001`. A primeira aula é uma prévia pública; as demais dependem de matrícula. O marco não configura pagamentos, matrícula automática ou recursos Pro.
 
-### 8. Encerrar a sessão
+### 8. Configurar o checkout demonstrativo
+
+Depois de configurar a fundação do curso, execute no PowerShell:
+
+```powershell
+.\scripts\configure-test-checkout.ps1
+```
+
+No WSL/Linux com PowerShell 7:
+
+```bash
+pwsh -NoProfile -File ./scripts/configure-test-checkout.ps1
+```
+
+O script só funciona quando `WP_ENVIRONMENT_TYPE` é `local`. Ele habilita de forma idempotente o método nativo **Cheque** do WooCommerce com textos explícitos de demonstração. Esse método não processa pagamentos reais: o pedido fica aguardando aprovação manual e o administrador deve alterá-lo para **Concluído** no WooCommerce. O Tutor LMS 4.0.5 então realiza a matrícula pela integração nativa, sem código próprio de matrícula.
+
+O configurador não desabilita outros meios de pagamento. Se encontrar uma configuração diferente e desconhecida para Cheque, ele falha sem sobrescrevê-la.
+
+### 9. Encerrar a sessão
 
 ```bash
 docker compose stop
@@ -208,8 +226,8 @@ A reversão não é automática. Somente com autorização explícita, localize 
 - [x] configuração automatizada do WooCommerce validada;
 - [x] páginas legais e transacionais reproduzíveis;
 - [x] fundação do Tutor LMS;
+- [x] checkout de testes por Cheque e matrícula nativa após aprovação;
 - [ ] landing page;
-- [ ] checkout de testes;
 - [ ] integrações;
 - [ ] testes e publicação.
 
