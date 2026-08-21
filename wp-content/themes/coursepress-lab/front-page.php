@@ -173,6 +173,53 @@ get_header();
         </div>
     </section>
 
+    <?php
+    $lead_capture_status = function_exists( 'coursepress_core_lead_redirect_url' ) && isset( $_GET['lead_capture'] ) ? sanitize_key( wp_unslash( $_GET['lead_capture'] ) ) : '';
+    $privacy_url         = get_privacy_policy_url();
+    ?>
+    <section id="captacao" class="coursepress-section coursepress-section--lead" aria-labelledby="captacao-title">
+        <div class="coursepress-shell coursepress-lead-grid">
+            <div>
+                <p class="coursepress-eyebrow"><?php esc_html_e( 'Acompanhe o projeto', 'coursepress-lab' ); ?></p>
+                <h2 id="captacao-title"><?php esc_html_e( 'Receba novidades sobre esta construção demonstrativa', 'coursepress-lab' ); ?></h2>
+                <p><?php esc_html_e( 'A CoursePress Academy é um ambiente educacional e de portfólio. Este formulário registra seu interesse apenas para demonstrar uma captação de leads local.', 'coursepress-lab' ); ?></p>
+            </div>
+            <div class="coursepress-lead-form-panel">
+                <?php if ( 'success' === $lead_capture_status ) : ?>
+                    <p class="coursepress-form-message coursepress-form-message--success" role="status"><?php esc_html_e( 'Interesse registrado com sucesso neste ambiente demonstrativo.', 'coursepress-lab' ); ?></p>
+                <?php elseif ( 'error' === $lead_capture_status ) : ?>
+                    <p class="coursepress-form-message coursepress-form-message--error" role="alert"><?php esc_html_e( 'Não foi possível registrar seu interesse. Revise os campos obrigatórios e tente novamente.', 'coursepress-lab' ); ?></p>
+                <?php endif; ?>
+                <form class="coursepress-lead-form" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post">
+                    <input type="hidden" name="action" value="coursepress_capture_lead">
+                    <?php wp_nonce_field( 'coursepress_capture_lead', 'coursepress_lead_nonce' ); ?>
+                    <p class="coursepress-honeypot" aria-hidden="true">
+                        <label for="coursepress-lead-website"><?php esc_html_e( 'Website', 'coursepress-lab' ); ?></label>
+                        <input id="coursepress-lead-website" name="coursepress_lead_website" type="text" tabindex="-1" autocomplete="off">
+                    </p>
+                    <p>
+                        <label for="coursepress-lead-name"><?php esc_html_e( 'Nome', 'coursepress-lab' ); ?></label>
+                        <input id="coursepress-lead-name" name="coursepress_lead_name" type="text" autocomplete="name" required>
+                    </p>
+                    <p>
+                        <label for="coursepress-lead-email"><?php esc_html_e( 'E-mail', 'coursepress-lab' ); ?></label>
+                        <input id="coursepress-lead-email" name="coursepress_lead_email" type="email" autocomplete="email" required>
+                    </p>
+                    <p class="coursepress-lead-consent">
+                        <input id="coursepress-lead-consent" name="coursepress_lead_consent" type="checkbox" value="1" required>
+                        <label for="coursepress-lead-consent">
+                            <?php esc_html_e( 'Li e concordo com o uso demonstrativo dos meus dados conforme a', 'coursepress-lab' ); ?>
+                            <?php if ( $privacy_url ) : ?>
+                                <a href="<?php echo esc_url( $privacy_url ); ?>"><?php esc_html_e( 'Política de Privacidade', 'coursepress-lab' ); ?></a>.
+                            <?php endif; ?>
+                        </label>
+                    </p>
+                    <button class="coursepress-button coursepress-button--primary" type="submit"><?php esc_html_e( 'Registrar interesse', 'coursepress-lab' ); ?></button>
+                </form>
+            </div>
+        </div>
+    </section>
+
     <section class="coursepress-final-cta" aria-labelledby="cta-final-title">
         <div class="coursepress-shell">
             <p class="coursepress-eyebrow coursepress-eyebrow--light"><?php esc_html_e( 'Próximo passo', 'coursepress-lab' ); ?></p>

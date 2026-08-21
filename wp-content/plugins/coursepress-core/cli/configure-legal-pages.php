@@ -49,6 +49,8 @@ function coursepress_core_legal_definition( string $key ): array {
                     '<p>Esta página apresenta, de forma demonstrativa, a estrutura de uma política de privacidade para as funcionalidades de conta e de checkout usadas no projeto.</p>',
                     '<h2>Uso no ambiente demonstrativo</h2>',
                     '<p>As funcionalidades são usadas exclusivamente para estudo, portfólio e validação técnica. Não há operação comercial nem processamento de pagamentos reais.</p>',
+                    '<h2>Captação de interesse</h2>',
+                    '<p>A landing page pode registrar nome e e-mail quando a pessoa manifesta consentimento explícito para a captação demonstrativa. Esses dados são armazenados somente em um registro privado do ambiente local, acessível a administradores, para demonstrar tecnicamente esse fluxo.</p>',
                     '<h2>Atualizações</h2>',
                     '<p>O conteúdo desta página é mantido pela automação do projeto para que o ambiente local possa ser reproduzido de forma consistente.</p>',
                 )

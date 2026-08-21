@@ -146,7 +146,13 @@ A página inicial é uma landing page responsiva construída no tema `coursepres
 
 Quando o curso ou produto demonstrativo não estiver disponível, a página apresenta uma mensagem segura e não exibe os CTAs de compra.
 
-### 10. Encerrar a sessão
+### 10. Registrar interesse demonstrativo
+
+A landing inclui uma seção de captação local com nome, e-mail e consentimento explícito. O envio usa nonce, validação no servidor, honeypot e redirecionamento PRG. Os leads são registros privados do WordPress, acessíveis somente a administradores; reenvios do mesmo e-mail normalizado retornam sucesso sem criar duplicação.
+
+O formulário não envia e-mails, não usa CRM, analytics nem serviços externos. A Política de Privacidade gerenciada descreve essa captação demonstrativa.
+
+### 11. Encerrar a sessão
 
 ```bash
 docker compose stop
