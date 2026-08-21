@@ -148,8 +148,6 @@ try {
         throw "O locale da loja nao foi configurado como $StoreLocale."
     }
 
-    Invoke-Wp eval-file wp-content/plugins/coursepress-core/cli/configure-privacy-notices.php
-
     $AdminOutput = & docker compose run --rm cli user list --role=administrator --format=ids --skip-plugins --skip-themes
     if ($LASTEXITCODE -ne 0) {
         throw "Nao foi possivel localizar um usuario administrador."
@@ -162,38 +160,70 @@ try {
 
     Invoke-Wp wc tool run install_pages "--user=$AdminId"
 
-    $StorePages = [ordered]@{
-        woocommerce_shop_page_id     = "Loja"
-        woocommerce_cart_page_id     = "Carrinho"
-        woocommerce_checkout_page_id = "Finaliza$([char] 0x00E7)$([char] 0x00E3)o de compra"
-        woocommerce_myaccount_page_id = "Minha conta"
-    }
+    $StorePages = @(
+        "woocommerce_shop_page_id",
+        "woocommerce_cart_page_id",
+        "woocommerce_checkout_page_id",
+        "woocommerce_myaccount_page_id"
+    )
 
-    foreach ($StorePage in $StorePages.GetEnumerator()) {
-        $PageIdOutput = & docker compose run --rm cli option get $StorePage.Key
+    foreach ($StorePageOption in $StorePages) {
+        $PageIdOutput = & docker compose run --rm cli option get $StorePageOption
         if ($LASTEXITCODE -ne 0) {
-            throw "Nao foi possivel localizar a pagina configurada em $($StorePage.Key)."
+            throw "Nao foi possivel localizar a pagina configurada em $StorePageOption."
         }
 
         $PageId = ($PageIdOutput | Select-Object -Last 1).Trim()
         if ($PageId -notmatch "^\d+$") {
-            throw "A pagina configurada em $($StorePage.Key) e invalida."
-        }
-
-        $ExpectedPageTitleHex = -join (
-            [System.Text.Encoding]::UTF8.GetBytes([string] $StorePage.Value) |
-                ForEach-Object { $_.ToString("x2") }
-        )
-        $StoredPageTitleHexOutput = & docker compose run --rm cli eval "echo bin2hex(get_the_title($PageId));"
-        if ($LASTEXITCODE -ne 0) {
-            throw "Nao foi possivel validar o titulo da pagina $PageId."
-        }
-
-        $StoredPageTitleHex = ($StoredPageTitleHexOutput | Select-Object -Last 1).Trim()
-        if ($StoredPageTitleHex -ne $ExpectedPageTitleHex) {
-            Invoke-Wp post update $PageId "--post_title=$($StorePage.Value)"
+            throw "A pagina configurada em $StorePageOption e invalida."
         }
     }
+
+    $StorePagesValidationOutput = & docker compose run --rm cli eval-file wp-content/plugins/coursepress-core/cli/validate-store-pages.php
+    if ($LASTEXITCODE -ne 0 -or (($StorePagesValidationOutput | Select-Object -Last 1).Trim() -ne "store-pages-valid")) {
+        throw "As paginas transacionais oficiais nao passaram na validacao."
+    }
+
+    $LegalPagesOutput = & docker compose run --rm cli eval-file wp-content/plugins/coursepress-core/cli/configure-legal-pages.php "--user=$AdminId"
+    if ($LASTEXITCODE -ne 0) {
+        throw "Nao foi possivel configurar as paginas legais."
+    }
+
+    $LegalPagesJson = ($LegalPagesOutput | Select-Object -Last 1).Trim()
+    try {
+        $LegalPages = $LegalPagesJson | ConvertFrom-Json
+    }
+    catch {
+        throw "O resultado da configuracao das paginas legais e invalido."
+    }
+
+    $PrivacyPageId = [string] $LegalPages.pages.privacy.id
+    $TermsPageId = [string] $LegalPages.pages.terms.id
+    if ($PrivacyPageId -notmatch "^\d+$" -or $TermsPageId -notmatch "^\d+$") {
+        throw "A configuracao das paginas legais nao retornou IDs validos."
+    }
+
+    $LegalPagesValidationOutput = & docker compose run --rm cli eval-file wp-content/plugins/coursepress-core/cli/validate-legal-pages.php
+    if ($LASTEXITCODE -ne 0) {
+        throw "As paginas legais e suas opcoes nao passaram na validacao."
+    }
+
+    $LegalPagesValidationJson = ($LegalPagesValidationOutput | Select-Object -Last 1).Trim()
+    try {
+        $LegalPagesValidation = $LegalPagesValidationJson | ConvertFrom-Json
+    }
+    catch {
+        throw "O resultado da validacao das paginas legais e invalido."
+    }
+
+    if (
+        [string] $LegalPagesValidation.pages.privacy.id -ne $PrivacyPageId -or
+        [string] $LegalPagesValidation.pages.terms.id -ne $TermsPageId
+    ) {
+        throw "As paginas legais validadas nao correspondem aos IDs configurados."
+    }
+
+    Invoke-Wp eval-file wp-content/plugins/coursepress-core/cli/configure-privacy-notices.php
 
     Invoke-Wp rewrite flush --hard
 

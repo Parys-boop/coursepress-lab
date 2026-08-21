@@ -18,10 +18,10 @@
 ## Fase 2 — Base comercial
 
 - [x] configurar identidade e estrutura do site;
-- [ ] instalar e configurar WooCommerce;
+- [x] instalar e configurar WooCommerce;
 - [x] criar produto de curso;
 - [ ] configurar checkout em ambiente de testes;
-- [ ] definir páginas legais e transacionais.
+- [x] definir páginas legais e transacionais.
 
 ## Fase 3 — Entrega do curso
 
