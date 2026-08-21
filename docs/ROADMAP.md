@@ -34,7 +34,7 @@
 ## Fase 4 — Conversão e integrações
 
 - [x] construir landing page responsiva;
-- [ ] configurar formulário e captação;
+- [x] configurar formulário e captação;
 - [ ] integrar e-mail transacional;
 - [ ] configurar GA4 e Google Tag Manager;
 - [ ] aplicar SEO técnico básico.
