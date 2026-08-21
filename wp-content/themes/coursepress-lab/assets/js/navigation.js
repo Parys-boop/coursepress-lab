@@ -1,53 +1,35 @@
-(() => {
-    const header = document.querySelector('[data-coursepress-header]');
+( function () {
+    'use strict';
 
-    if (!header) {
+    var toggle = document.querySelector( '[data-coursepress-menu-toggle]' );
+    var navigation = document.querySelector( '[data-coursepress-primary-navigation]' );
+    var mobileQuery = window.matchMedia( '(max-width: 767px)' );
+
+    if ( ! toggle || ! navigation ) {
         return;
     }
 
-    const toggle = header.querySelector('.coursepress-menu-toggle');
-    const navigation = header.querySelector('.coursepress-primary-navigation');
-    const mobileQuery = window.matchMedia('(max-width: 47.9375rem)');
+    document.documentElement.classList.add( 'coursepress-navigation-ready' );
 
-    if (!toggle || !navigation) {
-        return;
+    function setMenuState( isOpen ) {
+        toggle.setAttribute( 'aria-expanded', isOpen ? 'true' : 'false' );
+        navigation.hidden = mobileQuery.matches && ! isOpen;
     }
 
-    document.documentElement.classList.add('coursepress-navigation-ready');
+    setMenuState( false );
 
-    const setOpen = (isOpen) => {
-        toggle.setAttribute('aria-expanded', String(isOpen));
-        toggle.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
-        navigation.hidden = !isOpen;
-    };
+    toggle.addEventListener( 'click', function () {
+        setMenuState( toggle.getAttribute( 'aria-expanded' ) !== 'true' );
+    } );
 
-    const syncViewport = () => {
-        if (mobileQuery.matches) {
-            setOpen(false);
-            return;
-        }
-
-        navigation.hidden = false;
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.setAttribute('aria-label', 'Abrir menu');
-    };
-
-    toggle.addEventListener('click', () => {
-        setOpen(toggle.getAttribute('aria-expanded') !== 'true');
-    });
-
-    header.addEventListener('keydown', (event) => {
-        if ('Escape' === event.key && mobileQuery.matches && 'true' === toggle.getAttribute('aria-expanded')) {
-            setOpen(false);
+    document.addEventListener( 'keydown', function ( event ) {
+        if ( 'Escape' === event.key && mobileQuery.matches && 'true' === toggle.getAttribute( 'aria-expanded' ) ) {
+            setMenuState( false );
             toggle.focus();
         }
-    });
+    } );
 
-    if ('function' === typeof mobileQuery.addEventListener) {
-        mobileQuery.addEventListener('change', syncViewport);
-    } else {
-        mobileQuery.addListener(syncViewport);
-    }
-
-    syncViewport();
-})();
+    mobileQuery.addEventListener( 'change', function () {
+        setMenuState( false );
+    } );
+}() );

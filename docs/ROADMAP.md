@@ -33,7 +33,7 @@
 
 ## Fase 4 — Conversão e integrações
 
-- [ ] construir landing page responsiva;
+- [x] construir landing page responsiva;
 - [ ] configurar formulário e captação;
 - [ ] integrar e-mail transacional;
 - [ ] configurar GA4 e Google Tag Manager;
@@ -41,7 +41,7 @@
 
 ## Fase 5 — Código próprio
 
-- [ ] evoluir o tema `coursepress-lab`;
+- [x] evoluir o tema `coursepress-lab`;
 - [ ] evoluir o plugin `coursepress-core`;
 - [ ] registrar eventos e leads necessários;
 - [ ] adicionar configurações administrativas;

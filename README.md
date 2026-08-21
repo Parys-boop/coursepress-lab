@@ -140,7 +140,13 @@ O script só funciona quando `WP_ENVIRONMENT_TYPE` é `local`. Ele habilita de f
 
 O configurador não desabilita outros meios de pagamento. Se encontrar uma configuração diferente e desconhecida para Cheque, ele falha sem sobrescrevê-la.
 
-### 9. Encerrar a sessão
+### 9. Conhecer a landing page
+
+A página inicial é uma landing page responsiva construída no tema `coursepress-lab`, sem page builder. Ela busca o curso vinculado ao produto de SKU `CPA-WP-NEGOCIOS-001`, apresenta o preço e a grade reais, e adiciona esse produto ao carrinho antes de direcionar ao Checkout Block.
+
+Quando o curso ou produto demonstrativo não estiver disponível, a página apresenta uma mensagem segura e não exibe os CTAs de compra.
+
+### 10. Encerrar a sessão
 
 ```bash
 docker compose stop
@@ -227,7 +233,7 @@ A reversão não é automática. Somente com autorização explícita, localize 
 - [x] páginas legais e transacionais reproduzíveis;
 - [x] fundação do Tutor LMS;
 - [x] checkout de testes por Cheque e matrícula nativa após aprovação;
-- [ ] landing page;
+- [x] landing page responsiva integrada ao curso demonstrativo;
 - [ ] integrações;
 - [ ] testes e publicação.
 
