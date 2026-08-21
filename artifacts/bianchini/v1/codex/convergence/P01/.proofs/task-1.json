@@ -1,0 +1,173 @@
+{
+  "created_at": "2026-08-21T19:15:33.429558Z",
+  "plan_id": "P01",
+  "planning_version": "v1",
+  "proofs": {
+    "proof-33ae8fa1668ad2803aa47486c617fad3": {
+      "command": [
+        "curl",
+        "-fsS",
+        "http://localhost:8080/"
+      ],
+      "commit": "51c225052348411c01f94dcf5189e5cb5c1e79cd",
+      "created_at": "2026-08-21T19:15:38.096378Z",
+      "cwd": ".",
+      "exit_code": 0,
+      "plan_id": "P01",
+      "planning_version": "v1",
+      "proof_id": "proof-33ae8fa1668ad2803aa47486c617fad3",
+      "signature": "f1cc2e9157e3e47d23c7ace9ede7cbebb29c8df9d7c956d357c695461ef5791b",
+      "spawn_error": false,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "6ccd0feaf132c1906a72dc64f388337585850b2f89ce0e740fe271422956d2eb",
+      "timed_out": false,
+      "timeout_seconds": 30.0,
+      "unit_id": "task-1"
+    },
+    "proof-5a16156fa14106a321fa0f10e9492ed4": {
+      "command": [
+        "python3",
+        "-c",
+        "import hashlib,pathlib; p=pathlib.Path(\"/home/aluno/code/freelancer-work/.bianchini-worktrees/coursepress-lab/v1-p01/artifacts/bianchini/v1/execution/P01/evidence/coursepress-ga4-debugview-2026-08-21.jpg\"); assert hashlib.sha256(p.read_bytes()).hexdigest()==\"bcfd4a29b35fc966a1a8bec1c7e43a17bef613da1f403e6cb8e4e7a62eedd8fe\"; print(\"ga4-debugview-sanitized-evidence: passed\")"
+      ],
+      "commit": "51c225052348411c01f94dcf5189e5cb5c1e79cd",
+      "created_at": "2026-08-21T19:16:02.210535Z",
+      "cwd": ".",
+      "exit_code": 0,
+      "plan_id": "P01",
+      "planning_version": "v1",
+      "proof_id": "proof-5a16156fa14106a321fa0f10e9492ed4",
+      "signature": "7d83b8d6a4d675c779432d66bfb2c59402dce167957d8b70b046be66076df5e8",
+      "spawn_error": false,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "50649bee20bae785ecb04b0e3e21dfef2b578f66c4d26c8f060035577fb9fe52",
+      "timed_out": false,
+      "timeout_seconds": 30.0,
+      "unit_id": "task-1"
+    },
+    "proof-6e6ecee683dd2d0a921e106998a0bb65": {
+      "command": [
+        "docker",
+        "compose",
+        "exec",
+        "-T",
+        "wordpress",
+        "php",
+        "-l",
+        "/var/www/html/wp-content/themes/coursepress-lab/functions.php"
+      ],
+      "commit": "51c225052348411c01f94dcf5189e5cb5c1e79cd",
+      "created_at": "2026-08-21T19:15:34.271112Z",
+      "cwd": ".",
+      "exit_code": 0,
+      "plan_id": "P01",
+      "planning_version": "v1",
+      "proof_id": "proof-6e6ecee683dd2d0a921e106998a0bb65",
+      "signature": "e554910d490cc2f8ba9edd45b07fa3f236c5792c2349792b942f5ad2b85c6d70",
+      "spawn_error": false,
+      "stderr_sha256": "44e19b90c2d05a85ada1368f16795ceae3ccf7f80286c9a7752e462a9d5347b7",
+      "stdout_sha256": "5da0d7bb9e11e9bcb577d50e5d815286b2d59986631fc2b858e3c35ee780c6aa",
+      "timed_out": false,
+      "timeout_seconds": 60.0,
+      "unit_id": "task-1"
+    },
+    "proof-838c7b512fb19d2100da86238861c3d4": {
+      "command": [
+        "python3",
+        "-c",
+        "import hashlib,pathlib; p=pathlib.Path(\"/home/aluno/code/freelancer-work/.bianchini-worktrees/coursepress-lab/v1-p01/artifacts/bianchini/v1/execution/P01/evidence/coursepress-tag-assistant-2026-08-21.png\"); assert hashlib.sha256(p.read_bytes()).hexdigest()==\"e493d7595ca49f45790f2d5374423537a18f126c6c576059423e850554527f39\"; print(\"tag-assistant-sanitized-evidence: passed\")"
+      ],
+      "commit": "51c225052348411c01f94dcf5189e5cb5c1e79cd",
+      "created_at": "2026-08-21T19:16:02.032459Z",
+      "cwd": ".",
+      "exit_code": 0,
+      "plan_id": "P01",
+      "planning_version": "v1",
+      "proof_id": "proof-838c7b512fb19d2100da86238861c3d4",
+      "signature": "62f2f6c5871fa5d79c1f6d38eacb4ddfcdc36abed3ade9859b6997265e2996a9",
+      "spawn_error": false,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e6a36df64f9ba2870d1197bc91b19dcb36ad9efa251de7f9ef161b0d0163465b",
+      "timed_out": false,
+      "timeout_seconds": 30.0,
+      "unit_id": "task-1"
+    },
+    "proof-8a232f75f6386f19f7b54ff5fa704a85": {
+      "command": [
+        "python3",
+        "-c",
+        "import pathlib; compose=pathlib.Path(\"compose.yaml\").read_text(); source=pathlib.Path(\"wp-content/themes/coursepress-lab/functions.php\").read_text(); assert \"COURSEPRESS_GTM_CONTAINER_ID: ${COURSEPRESS_GTM_CONTAINER_ID:-}\" in compose; assert \"define(\\\"COURSEPRESS_GTM_CONTAINER_ID\\\", getenv(\\\"COURSEPRESS_GTM_CONTAINER_ID\\\") ?: \\\"\\\");\" not in source; assert source.count(\"googletagmanager.com/gtm.js\") == 1; assert source.count(\"googletagmanager.com/ns.html\") == 1; assert \"gtag.js\" not in source; print(\"static-contract-tests: passed\")"
+      ],
+      "commit": "51c225052348411c01f94dcf5189e5cb5c1e79cd",
+      "created_at": "2026-08-21T19:15:33.421654Z",
+      "cwd": ".",
+      "exit_code": 0,
+      "plan_id": "P01",
+      "planning_version": "v1",
+      "proof_id": "proof-8a232f75f6386f19f7b54ff5fa704a85",
+      "signature": "ee9f74d792e04a6afd501371723a856cb3d45e8f758ff474680c101a0441123e",
+      "spawn_error": false,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "55b6a8508910613a41274f2fdd718899d3987be1edaac219ce2e1309e316a2af",
+      "timed_out": false,
+      "timeout_seconds": 30.0,
+      "unit_id": "task-1"
+    },
+    "proof-a9d86c303dd8b63c61a94a8833310977": {
+      "command": [
+        "docker",
+        "compose",
+        "--env-file",
+        ".env.example",
+        "run",
+        "--rm",
+        "cli",
+        "theme",
+        "is-active",
+        "coursepress-lab"
+      ],
+      "commit": "51c225052348411c01f94dcf5189e5cb5c1e79cd",
+      "created_at": "2026-08-21T19:15:37.789975Z",
+      "cwd": ".",
+      "exit_code": 0,
+      "plan_id": "P01",
+      "planning_version": "v1",
+      "proof_id": "proof-a9d86c303dd8b63c61a94a8833310977",
+      "signature": "86be6821d4615c990ab7e2ab5c356e83a668939eb1bf06d3cf9a8d265af08c91",
+      "spawn_error": false,
+      "stderr_sha256": "09fad9534aa9ca34f877de840aea1194a0cd587bc4cb88303fadac6ebce2b1e5",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "timed_out": false,
+      "timeout_seconds": 90.0,
+      "unit_id": "task-1"
+    },
+    "proof-b97b95d482e54e6eb29de4aa1bdf3699": {
+      "command": [
+        "docker",
+        "compose",
+        "--env-file",
+        ".env.example",
+        "config",
+        "--quiet"
+      ],
+      "commit": "51c225052348411c01f94dcf5189e5cb5c1e79cd",
+      "created_at": "2026-08-21T19:15:33.732796Z",
+      "cwd": ".",
+      "exit_code": 0,
+      "plan_id": "P01",
+      "planning_version": "v1",
+      "proof_id": "proof-b97b95d482e54e6eb29de4aa1bdf3699",
+      "signature": "d37b1e72a3f1139cd07c99e8113fdcdec54effc1ff4932ae1d54b636f2feb92f",
+      "spawn_error": false,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "timed_out": false,
+      "timeout_seconds": 60.0,
+      "unit_id": "task-1"
+    }
+  },
+  "repository_root": "/home/aluno/code/freelancer-work/.bianchini-worktrees/coursepress-lab/v1-p01",
+  "store_version": 1,
+  "unit_id": "task-1",
+  "updated_at": "2026-08-21T19:16:02.247098Z"
+}

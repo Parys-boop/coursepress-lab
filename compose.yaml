@@ -45,11 +45,13 @@ services:
       WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
       WORDPRESS_DEBUG: ${WORDPRESS_DEBUG:-1}
       COURSEPRESS_LOCAL_MAIL_ENABLED: ${COURSEPRESS_LOCAL_MAIL_ENABLED:-0}
+      COURSEPRESS_GTM_CONTAINER_ID: ${COURSEPRESS_GTM_CONTAINER_ID:-}
       WORDPRESS_CONFIG_EXTRA: |
         define('WP_ENVIRONMENT_TYPE', 'local');
         define('WP_DEBUG_LOG', true);
         define('WP_DEBUG_DISPLAY', false);
         define('DISALLOW_FILE_EDIT', true);
+        define('COURSEPRESS_GTM_CONTAINER_ID', getenv('COURSEPRESS_GTM_CONTAINER_ID') ?: '');
     volumes: &wordpress-volumes
       - wordpress_data:/var/www/html
       - ./wp-content/plugins/coursepress-core:/var/www/html/wp-content/plugins/coursepress-core

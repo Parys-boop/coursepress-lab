@@ -1,0 +1,120 @@
+{
+  "blockers": {},
+  "created_at": "2026-08-21T19:19:53.165075Z",
+  "decisions": [],
+  "deferred_hardening": [],
+  "delta_submissions": 0,
+  "events": [
+    {
+      "action": "review_frozen",
+      "at": "2026-08-21T19:19:53.165100Z",
+      "blockers": [],
+      "hardening": 0
+    },
+    {
+      "action": "gate_recorded",
+      "at": "2026-08-21T19:20:10.709006Z",
+      "gate": "config",
+      "proof_id": "proof-b97b95d482e54e6eb29de4aa1bdf3699",
+      "status": "passed"
+    },
+    {
+      "action": "gate_recorded",
+      "at": "2026-08-21T19:20:10.879088Z",
+      "gate": "php-lint",
+      "proof_id": "proof-6e6ecee683dd2d0a921e106998a0bb65",
+      "status": "passed"
+    },
+    {
+      "action": "gate_recorded",
+      "at": "2026-08-21T19:20:11.089334Z",
+      "gate": "wp-cli",
+      "proof_id": "proof-a9d86c303dd8b63c61a94a8833310977",
+      "status": "passed"
+    },
+    {
+      "action": "gate_recorded",
+      "at": "2026-08-21T19:20:11.341024Z",
+      "gate": "public-html",
+      "proof_id": "proof-33ae8fa1668ad2803aa47486c617fad3",
+      "status": "passed"
+    },
+    {
+      "action": "gate_recorded",
+      "at": "2026-08-21T19:20:11.683441Z",
+      "gate": "tag-assistant",
+      "proof_id": "proof-838c7b512fb19d2100da86238861c3d4",
+      "status": "passed"
+    },
+    {
+      "action": "gate_recorded",
+      "at": "2026-08-21T19:20:12.069565Z",
+      "gate": "ga4-debugview",
+      "proof_id": "proof-5a16156fa14106a321fa0f10e9492ed4",
+      "status": "passed"
+    }
+  ],
+  "fix_rounds": 0,
+  "gates": {
+    "config": {
+      "proof_id": "proof-b97b95d482e54e6eb29de4aa1bdf3699",
+      "recorded_at": "2026-08-21T19:20:10.708987Z",
+      "revision": "51c225052348411c01f94dcf5189e5cb5c1e79cd",
+      "status": "passed"
+    },
+    "ga4-debugview": {
+      "proof_id": "proof-5a16156fa14106a321fa0f10e9492ed4",
+      "recorded_at": "2026-08-21T19:20:12.069546Z",
+      "revision": "51c225052348411c01f94dcf5189e5cb5c1e79cd",
+      "status": "passed"
+    },
+    "php-lint": {
+      "proof_id": "proof-6e6ecee683dd2d0a921e106998a0bb65",
+      "recorded_at": "2026-08-21T19:20:10.879068Z",
+      "revision": "51c225052348411c01f94dcf5189e5cb5c1e79cd",
+      "status": "passed"
+    },
+    "public-html": {
+      "proof_id": "proof-33ae8fa1668ad2803aa47486c617fad3",
+      "recorded_at": "2026-08-21T19:20:11.341001Z",
+      "revision": "51c225052348411c01f94dcf5189e5cb5c1e79cd",
+      "status": "passed"
+    },
+    "tag-assistant": {
+      "proof_id": "proof-838c7b512fb19d2100da86238861c3d4",
+      "recorded_at": "2026-08-21T19:20:11.683418Z",
+      "revision": "51c225052348411c01f94dcf5189e5cb5c1e79cd",
+      "status": "passed"
+    },
+    "wp-cli": {
+      "proof_id": "proof-a9d86c303dd8b63c61a94a8833310977",
+      "recorded_at": "2026-08-21T19:20:11.089313Z",
+      "revision": "51c225052348411c01f94dcf5189e5cb5c1e79cd",
+      "status": "passed"
+    }
+  },
+  "last_review_head": "51c225052348411c01f94dcf5189e5cb5c1e79cd",
+  "pending_delta": null,
+  "phase": "review_frozen",
+  "plan_id": "P01",
+  "planning_version": "v1",
+  "redesign_count": 0,
+  "repository_root": "/home/aluno/code/freelancer-work/.bianchini-worktrees/coursepress-lab/v1-p01",
+  "required_gates": [
+    "config",
+    "php-lint",
+    "wp-cli",
+    "public-html",
+    "tag-assistant",
+    "ga4-debugview"
+  ],
+  "schema_version": 2,
+  "seam": "analytics-container",
+  "task_brief": "artifacts/bianchini/v1/execution/P01/task-1-brief.md",
+  "task_brief_digest": "192a9c8cb89afdbb495c08f648e810ee19ee79e92a9510cfb1986f9fd4899c7f",
+  "unit_digest": "83f7a07055a2aa8ffa7fe057aa3ec2d50af594ff9bd683acc1f5c59e99c8e621",
+  "unit_id": "task-1",
+  "unit_identity": "7f576656b0bd33864180f198f33d6656d25b2aaeceda9a6e068b5dfc15fa06eb",
+  "unit_identity_source": "task_brief",
+  "updated_at": "2026-08-21T19:20:12.069568Z"
+}

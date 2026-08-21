@@ -38,6 +38,78 @@ function coursepress_lab_assets(): void {
 add_action( 'wp_enqueue_scripts', 'coursepress_lab_assets' );
 
 /**
+ * Retorna o ID de contêiner GTM local quando ele atende ao formato aceito.
+ */
+function coursepress_lab_get_gtm_container_id(): string {
+    if ( ! defined( 'COURSEPRESS_GTM_CONTAINER_ID' ) ) {
+        return '';
+    }
+
+    $container_id = (string) COURSEPRESS_GTM_CONTAINER_ID;
+
+    return 1 === preg_match( '/\AGTM-[A-Z0-9]+\z/', $container_id ) ? $container_id : '';
+}
+
+/**
+ * Imprime a parte head do único contêiner GTM configurado.
+ */
+function coursepress_lab_render_gtm_head(): void {
+    static $rendered = false;
+
+    if ( $rendered ) {
+        return;
+    }
+
+    $container_id = coursepress_lab_get_gtm_container_id();
+
+    if ( '' === $container_id ) {
+        return;
+    }
+
+    $rendered   = true;
+    $encoded_id = rawurlencode( $container_id );
+    $json_id    = wp_json_encode( $container_id );
+    ?>
+    <!-- Google Tag Manager -->
+    <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id=<?php echo esc_js( $encoded_id ); ?>'+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer',<?php echo $json_id; ?>);
+    </script>
+    <!-- End Google Tag Manager -->
+    <?php
+}
+add_action( 'wp_head', 'coursepress_lab_render_gtm_head', 1 );
+
+/**
+ * Imprime o fallback noscript do mesmo contêiner GTM configurado.
+ */
+function coursepress_lab_render_gtm_body(): void {
+    static $rendered = false;
+
+    if ( $rendered ) {
+        return;
+    }
+
+    $container_id = coursepress_lab_get_gtm_container_id();
+
+    if ( '' === $container_id ) {
+        return;
+    }
+
+    $rendered      = true;
+    $noscript_url  = 'https://www.googletagmanager.com/ns.html?id=' . rawurlencode( $container_id );
+    ?>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="<?php echo esc_url( $noscript_url ); ?>" height="0" width="0" style="display:none;visibility:hidden" title="<?php echo esc_attr__( 'Google Tag Manager', 'coursepress-lab' ); ?>"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <?php
+}
+add_action( 'wp_body_open', 'coursepress_lab_render_gtm_body', 1 );
+
+/**
  * Obtém os dados publicados que a landing page pode apresentar com segurança.
  *
  * @return array<string, mixed>|null
