@@ -1,0 +1,6 @@
+```json
+{
+  "verdict": "passed",
+  "findings": []
+}
+```
