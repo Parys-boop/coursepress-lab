@@ -1,0 +1,28 @@
+{
+  "captured_at": "2026-08-21",
+  "revision": "51c225052348411c01f94dcf5189e5cb5c1e79cd",
+  "tag_assistant": {
+    "file": "coursepress-tag-assistant-2026-08-21.png",
+    "sha256": "e493d7595ca49f45790f2d5374423537a18f126c6c576059423e850554527f39",
+    "proof_id": "proof-838c7b512fb19d2100da86238861c3d4",
+    "status": "passed",
+    "observations": [
+      "conectado a http://localhost:8080/",
+      "contêiner de teste em pré-visualização",
+      "Google tag — CoursePress Lab Teste acionada uma vez",
+      "nenhuma etiqueta não acionada"
+    ]
+  },
+  "ga4_debugview": {
+    "file": "coursepress-ga4-debugview-2026-08-21.jpg",
+    "sha256": "bcfd4a29b35fc966a1a8bec1c7e43a17bef613da1f403e6cb8e4e7a62eedd8fe",
+    "proof_id": "proof-5a16156fa14106a321fa0f10e9492ed4",
+    "status": "passed",
+    "observations": [
+      "propriedade CoursePress Lab — Teste",
+      "page_view recebido com debug_mode = 1",
+      "first_visit e session_start somente como eventos automáticos nativos",
+      "nenhum evento personalizado ou dado pessoal enviado"
+    ]
+  }
+}

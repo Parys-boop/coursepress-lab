@@ -37,6 +37,7 @@
 - [x] configurar formulário e captação;
 - [x] integrar e-mail transacional;
 - [ ] configurar GA4 e Google Tag Manager;
+  - implementação local prevista; conclusão depende de Preview/Tag Assistant e GA4 DebugView com o contêiner de teste;
 - [ ] aplicar SEO técnico básico.
 
 ## Fase 5 — Código próprio

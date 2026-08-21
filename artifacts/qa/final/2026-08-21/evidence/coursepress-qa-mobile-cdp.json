@@ -1,0 +1,29 @@
+{
+  "metrics": {
+    "url": "http://localhost:8080/",
+    "title": "CoursePress Academy – Cursos práticos para freelancers e pequenos negócios.",
+    "innerWidth": 390,
+    "innerHeight": 844,
+    "clientWidth": 390,
+    "scrollWidth": 390,
+    "gtmScripts": 1,
+    "gtmFrames": 0,
+    "dataLayerEvents": [
+      "gtm.js",
+      "gtm.dom",
+      "gtm.load"
+    ],
+    "bodyText": "Pular para o conteúdo\nCP\nCoursePress Academy\nAlternar menu de navegação\n\nCOURSEPRESS ACADEMY · CURSO DEMONSTRATIVO\n\nWordPress para Negócios\n\nUma trilha prática para planejar, estruturar e publicar uma loja online com WordPress e WooCommerce.\n\nO curso demonstrativo está temporariamente indisponível. ",
+    "resources": [
+      "googletagmanager.com/gtm.js (um recurso; identificador omitido)"
+    ]
+  },
+  "console_error_events": [],
+  "menu_state": {
+    "expanded": "true",
+    "hidden": false,
+    "activeTag": "BUTTON"
+  },
+  "runner": "Google Chrome via CDP",
+  "viewport": "390x844 CSS px"
+}

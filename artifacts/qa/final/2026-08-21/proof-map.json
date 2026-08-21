@@ -1,0 +1,51 @@
+{
+  "candidate": {
+    "id": "v1-p01-51c2250",
+    "revision": "51c225052348411c01f94dcf5189e5cb5c1e79cd",
+    "build": "docker-local",
+    "checksum": "0c8236a6242765ab9f0568f7a22be1115d7e169f22043cf3d0e1245bbe5acccb"
+  },
+  "automated": [
+    {
+      "command": "docker compose ps",
+      "proven": true,
+      "source_type": "release_gate",
+      "candidate": {
+        "id": "v1-p01-51c2250",
+        "revision": "51c225052348411c01f94dcf5189e5cb5c1e79cd",
+        "build": "docker-local",
+        "checksum": "0c8236a6242765ab9f0568f7a22be1115d7e169f22043cf3d0e1245bbe5acccb"
+      },
+      "evidence": "artifacts/qa/final/2026-08-21/SUMMARY.md#baseline-automatizada"
+    },
+    {
+      "command": "docker compose run --rm cli plugin list",
+      "proven": true,
+      "source_type": "release_gate",
+      "candidate": {
+        "id": "v1-p01-51c2250",
+        "revision": "51c225052348411c01f94dcf5189e5cb5c1e79cd",
+        "build": "docker-local",
+        "checksum": "0c8236a6242765ab9f0568f7a22be1115d7e169f22043cf3d0e1245bbe5acccb"
+      },
+      "evidence": "artifacts/qa/final/2026-08-21/SUMMARY.md#baseline-automatizada"
+    },
+    {
+      "command": "curl -fsS http://localhost:8080/",
+      "proven": true,
+      "source_type": "release_gate",
+      "candidate": {
+        "id": "v1-p01-51c2250",
+        "revision": "51c225052348411c01f94dcf5189e5cb5c1e79cd",
+        "build": "docker-local",
+        "checksum": "0c8236a6242765ab9f0568f7a22be1115d7e169f22043cf3d0e1245bbe5acccb"
+      },
+      "evidence": "artifacts/qa/final/2026-08-21/SUMMARY.md#baseline-automatizada"
+    }
+  ],
+  "automated_total": 3,
+  "automated_proven": 3,
+  "automation_gaps": [],
+  "manual_gaps": [],
+  "mutation_evidence": []
+}

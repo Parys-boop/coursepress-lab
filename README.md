@@ -158,7 +158,37 @@ O ambiente inclui o Mailpit `v1.30.7` para capturar e-mails sem entregá-los for
 
 O primeiro registro de interesse envia uma confirmação em texto simples. Reenvios do mesmo e-mail não geram nova confirmação depois de um envio bem-sucedido; se o envio anterior falhar, uma nova tentativa é feita sem duplicar o lead.
 
-### 12. Encerrar a sessão
+### 12. Validar GA4 pelo Google Tag Manager
+
+A instrumentação é opcional e permanece desativada quando
+`COURSEPRESS_GTM_CONTAINER_ID` está vazio. Para uma validação local, use um
+contêiner Web exclusivo de teste e informe apenas um ID no formato `GTM-*` no
+arquivo `.env`:
+
+```dotenv
+COURSEPRESS_GTM_CONTAINER_ID=GTM-EXEMPLO
+```
+
+No painel do GTM, configure uma única **tag Google** com o Measurement ID
+`G-*` do fluxo GA4 de teste. O Measurement ID, credenciais e exports do Google
+não devem ser gravados no repositório. Depois de alterar o `.env`, recrie o
+serviço WordPress e confira a instalação local:
+
+```bash
+docker compose up -d --force-recreate wordpress
+curl -fsS http://localhost:8080/ | rg -o 'googletagmanager\.com/gtm\.js\?id=GTM-[A-Z0-9]+'
+```
+
+O comando deve encontrar uma única referência. Use o Preview/Tag Assistant
+para confirmar uma única tag Google e o GA4 DebugView para confirmar apenas o
+`page_view` automático, sem nome, e-mail, dados de lead, checkout ou compra.
+Remova o valor da variável e recrie o serviço para desativar a emissão.
+
+Não use um contêiner de produção nem habilite coleta pública sem aprovação
+jurídica/operacional sobre privacidade e consentimento. Eventos customizados,
+SEO, Consent Mode e CMP não fazem parte desta etapa.
+
+### 13. Encerrar a sessão
 
 ```bash
 docker compose stop
