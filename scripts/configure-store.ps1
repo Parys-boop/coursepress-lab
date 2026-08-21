@@ -119,7 +119,7 @@ try {
         woocommerce_default_country                       = "BR:SP"
         woocommerce_calc_taxes                            = "no"
         woocommerce_enable_coupons                        = "yes"
-        woocommerce_enable_guest_checkout                 = "yes"
+        woocommerce_enable_guest_checkout                 = "no"
         woocommerce_enable_signup_and_login_from_checkout = "yes"
         woocommerce_enable_myaccount_registration         = "yes"
         woocommerce_manage_stock                          = "no"
